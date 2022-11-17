@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Omni Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Omni Linear OpMode with changes", group="Linear Opmode")
 @Disabled
 public class BasicOmniOpMode_Linear extends LinearOpMode {
 
@@ -46,6 +46,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
+    private double deadzone = 0.1;
 
     @Override
     public void runOpMode() {
@@ -86,8 +87,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.button_7;
-            
+            double yaw     =  gamepad1.right_trigger - gamepad1.left_trigger;
+
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double leftFrontPower  = axial + lateral + yaw;
@@ -135,6 +136,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
+            telemetry.addData("Are buttons not pressed?", atRest());
             telemetry.update();
         }
     }}
