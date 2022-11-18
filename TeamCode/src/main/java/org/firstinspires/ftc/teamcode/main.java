@@ -46,7 +46,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    private double deadzone = 0.1;
+    private DcMotor ClawHeight = null;
 
     @Override
     public void runOpMode() {
@@ -57,6 +57,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        ClawHeight = hardwareMap.get(DcMotor.class, "Claw_height");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -72,6 +73,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        ClawHeight.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
@@ -88,6 +90,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_trigger - gamepad1.left_trigger;
+            double height = -gamepad1.right_stick_y;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -137,6 +140,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
+            telemetry.addData("Height", "%4.2f", height);
             telemetry.addData("Are buttons not pressed?", atRest());
             telemetry.update();
         }
