@@ -46,6 +46,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
+    private Servo Claw = null;
 
     @Override
     public void runOpMode() {
@@ -57,6 +58,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         ClawHeight = hardwareMap.get(DcMotor.class, "Claw_height");
+        Claw = hardwareMap.get(Servo.class, "Claw");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -73,6 +75,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
+        Claw.setDirection(Servo.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
@@ -90,6 +93,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_trigger - gamepad1.left_trigger;
             double height = -gamepad1.right_stick_y;
+            double claw = gamepad1.right_stick_x;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -97,18 +101,24 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double rightFrontPower = axial - lateral - yaw;
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
+            double ClawHeightPower = height;
+            double ClawPower = claw;
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
             max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
             max = Math.max(max, Math.abs(leftBackPower));
             max = Math.max(max, Math.abs(rightBackPower));
+            max = Math.max(max, Math.abs(ClawHeightPower));
+            max = Math.max(max, Math.abs(ClawPower));
 
             if (max > 1.0) {
                 leftFrontPower  /= max;
                 rightFrontPower /= max;
                 leftBackPower   /= max;
                 rightBackPower  /= max;
+                ClawHeightPower /= max;
+                ClawPower /= max;
             }
 
             // This is test code:
@@ -133,6 +143,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             rightFrontDrive.setPower(rightFrontPower);
             leftBackDrive.setPower(leftBackPower);
             rightBackDrive.setPower(rightBackPower);
+            ClawHeight.setPower(ClawHeightPower);
+            Claw.setPosition(ClawPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -140,6 +152,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
             telemetry.addData("Height", "%4.2f", height);
+            telemetry.addData("Claw", "%4.2f", claw);
             telemetry.addData("Are buttons not pressed?", atRest());
             telemetry.update();
         }
