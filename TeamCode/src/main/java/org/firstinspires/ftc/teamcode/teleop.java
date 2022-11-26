@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -24,10 +25,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  * 1) Axial:    Driving forward and backward               Left-joystick Forward/Backward
  * 2) Lateral:  Strafing right and left                     Left-joystick Right and Left
- * 3) Yaw:      Rotating Clockwise and counter clockwise    Right-joystick Right and Left
- *Have yaw mapped also to the left-joystick
- *The lateral can be mapped to a button combination of a button and left-joystick. This may be
- *implemented with an unused
+ * 3) Yaw:      Rotating Clockwise and counter clockwise    Left-trigger and Right-trigger
+ * 4) ClawHeight: Raises and lowers claw                   Right-joystick Forward/Backward
+ * 5) Claw:     Opens and closes claw                     Right-joystick Right and Left
  * This code is written assuming that the right-side motors need to be reversed for the robot to drive forward.
  * When you first test your robot, if it moves backward when you push the left stick forward, then you must flip
  * the direction of all 4 motors (see code below).
@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Omni Linear OpMode with changes", group="Linear Opmode")
+@TeleOp(name="Teleop", group="Linear Opmode")
 public class BasicOmniOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
@@ -75,7 +75,6 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
-        Claw.setDirection(Servo.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
@@ -93,7 +92,9 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_trigger - gamepad1.left_trigger;
             double height = -gamepad1.right_stick_y;
-            double claw = gamepad1.right_stick_x;
+            //servo for claw setup which sucks
+            double INITposition = 0.0;
+            double position = gamepad1.right_stick_x;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -102,7 +103,6 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
             double ClawHeightPower = height;
-            double ClawPower = claw;
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
@@ -110,7 +110,6 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             max = Math.max(max, Math.abs(leftBackPower));
             max = Math.max(max, Math.abs(rightBackPower));
             max = Math.max(max, Math.abs(ClawHeightPower));
-            max = Math.max(max, Math.abs(ClawPower));
 
             if (max > 1.0) {
                 leftFrontPower  /= max;
@@ -118,7 +117,6 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
                 leftBackPower   /= max;
                 rightBackPower  /= max;
                 ClawHeightPower /= max;
-                ClawPower /= max;
             }
 
             // This is test code:
@@ -144,7 +142,10 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             leftBackDrive.setPower(leftBackPower);
             rightBackDrive.setPower(rightBackPower);
             ClawHeight.setPower(ClawHeightPower);
-            Claw.setPosition(ClawPower);
+
+            if (gamepad1.right_stick_x) {
+                Claw.setPosition(INITposition + position);
+            }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -152,7 +153,6 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
             telemetry.addData("Height", "%4.2f", height);
-            telemetry.addData("Claw", "%4.2f", claw);
             telemetry.addData("Are buttons not pressed?", atRest());
             telemetry.update();
         }
