@@ -3,6 +3,9 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -10,3 +13,80 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
+@Autonomous(name="autonomous phase", group="Linear Opmode");
+public class AutonomousOpMode_Linear extends LinearOpMode {
+    private ElapsedTime runtime = new ElapsedTime();
+    private DcMotor leftFrontDrive = null;
+    private DcMotor leftBackDrive = null;
+    private DcMotor rightFrontDrive = null;
+    private DcMotor rightBackDrive = null;
+    private DcMotor ClawHeight = null;
+    private Servo Claw = null;
+    @Override
+    public void runOpMode() {
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
+        ClawHeight = hardwareMap.get(DcMotor.class, "Claw_height");
+        Claw = hardwareMap.get(Servo.class, "Claw");
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        ClawHeight.setDirection(DcMotor.Direction.FORWARD);
+        Claw.setDirection(Servo.Direction.FORWARD);
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
+        waitForStart();
+        runtime.reset();
+
+        while (opModeIsActive()) {
+            double max;
+
+                double axial;
+                double lateral;
+                double yaw;
+                double height;
+                double INITposition = 0;
+                double position;
+                double leftFrontPower;
+                double rightFrontPower;
+                double leftBackPower;
+                double rightBackPower;
+                double ClawHeightPower;
+                double leftFrontDrive = axial+lateral+yaw;
+                double rightFrontDrive = axial-lateral-yaw;
+                double leftBackDrive = axial-lateral+yaw;
+                double rightBackDrive = axial+lateral-yaw;
+                double ClawHeight = height;
+
+                max = Math.max(Math.abs(leftFrontDrive), Math.abs(rightFrontDrive));
+                max = Math.max(Math.abs(leftBackDrive), max);
+                max = Math.max(Math.abs(rightBackDrive), max);
+                max = Math.max(Math.abs(ClawHeight), max);
+
+                if(max>1.0) {
+                    leftFrontDrive /= max;
+                    rightFrontDrive /= max;
+                    leftBackDrive /= max;
+                    rightBackDrive /= max;
+                    ClawHeight /= max;
+                }
+
+                leftFrontDrive.setPower(leftFrontPower);
+                rightFrontDrive.setPower(rightFrontPower);
+                leftBackDrive.setPower(leftBackPower);
+                rightBackDrive.setPower(rightBackPower);
+                ClawHeight.setPower(ClawHeightPower);
+
+                telemetry.addData("Status", "Run Time: " + runtime.toString());
+                telemetry.addData("Front left/right" , "%.2f", leftFrontPower, rightFrontPower);
+                telemetry.addData("Back left/right" , "%.2f", leftBackPower, rightBackPower);
+                telemetry.addDada("Axial/Lateral/Yaw" , "%.2f", axial, lateral, yaw);
+                telemetry.addData("Claw Height" , "%.2f", ClawHeightPower);
+                telemetry.update();
+        }
+    }
+}
