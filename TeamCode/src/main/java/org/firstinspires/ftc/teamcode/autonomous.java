@@ -55,7 +55,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                 double rightFrontPower = axial-lateral-yaw;
                 double leftBackPower = axial-lateral+yaw;
                 double rightBackPower = axial+lateral-yaw;
-                double ClawHeightPower;/
+                double ClawHeightPower;
 
                 max = Math.max(Math.abs(leftFrontDrive), Math.abs(rightFrontDrive));
                 max = Math.max(Math.abs(leftBackDrive), max);
