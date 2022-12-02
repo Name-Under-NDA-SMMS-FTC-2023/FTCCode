@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@Autonomous(name="autonomous phase", group="Linear Opmode");
+@Autonomous(name="autonomous phase", group="Linear Opmode")
 public class AutonomousOpMode_Linear extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
@@ -51,16 +51,11 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                 double height;
                 double INITposition = 0;
                 double position;
-                double leftFrontPower;
-                double rightFrontPower;
-                double leftBackPower;
-                double rightBackPower;
+                double leftFrontPower = axial+lateral+yaw;
+                double rightFrontPower = axial-lateral-yaw;
+                double leftBackPower = axial-lateral+yaw;
+                double rightBackPower = axial+lateral-yaw;
                 double ClawHeightPower;
-                double leftFrontDrive = axial+lateral+yaw;
-                double rightFrontDrive = axial-lateral-yaw;
-                double leftBackDrive = axial-lateral+yaw;
-                double rightBackDrive = axial+lateral-yaw;
-                double ClawHeight = height;
 
                 max = Math.max(Math.abs(leftFrontDrive), Math.abs(rightFrontDrive));
                 max = Math.max(Math.abs(leftBackDrive), max);
