@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -36,8 +36,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Teleop", group="Linear Opmode")
-public class BasicOmniOpMode_Linear extends LinearOpMode {
+@TeleOp(name="Teleop")
+public class teleop extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -94,8 +94,7 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             double height = -gamepad1.right_stick_y;
             //servo for claw setup which sucks
             double INITposition = 0.0;
-            double position = gamepad1.right_stick_x;
-
+            
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double leftFrontPower  = axial + lateral + yaw;
@@ -143,8 +142,15 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
             ClawHeight.setPower(ClawHeightPower);
 
-            if (gamepad1.right_stick_x) {
-                Claw.setPosition(INITposition + position);
+            double position = gamepad1.right_stick_x;
+
+            if (position != 0) {
+                double currentPosition = Claw.getPosition();
+                if (position > 0) {
+                    Claw.setPosition(currentPosition + position/100);
+                } else if (position < 0) {
+                    Claw.setPosition(currentPosition - position/100);
+                }
             }
 
             // Show the elapsed game time and wheel power.
@@ -154,6 +160,8 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
             telemetry.addData("Height", "%4.2f", height);
             telemetry.addData("Are buttons not pressed?", atRest());
+            telemety.addData("Claw Position", Claw.getPosition());
             telemetry.update();
         }
-    }}
+    }
+}
