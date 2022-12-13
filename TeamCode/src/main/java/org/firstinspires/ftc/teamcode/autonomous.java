@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+//importing the needed variables.
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
+//setting runtime for the motors during autop
 @Autonomous(name="autonomous phase", group="Linear Opmode")
 public class AutonomousOpMode_Linear extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -22,6 +24,8 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
+
+    //maps code to motors
     @Override
     public void runOpMode() {
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
@@ -62,6 +66,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                 max = Math.max(Math.abs(rightBackDrive), max);
                 max = Math.max(Math.abs(ClawHeight), max);
 
+                //speed?
                 if(max>1.0) {
                     leftFrontDrive /= max;
                     rightFrontDrive /= max;
@@ -69,13 +74,15 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                     rightBackDrive /= max;
                     ClawHeight /= max;
                 }
-
+                
+                //set motor power?
                 leftFrontDrive.setPower(leftFrontPower);
                 rightFrontDrive.setPower(rightFrontPower);
                 leftBackDrive.setPower(leftBackPower);
                 rightBackDrive.setPower(rightBackPower);
                 ClawHeight.setPower(ClawHeightPower);
 
+                //saving the data for the motors?
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Front left/right" , "%.2f", leftFrontPower, rightFrontPower);
                 telemetry.addData("Back left/right" , "%.2f", leftBackPower, rightBackPower);
