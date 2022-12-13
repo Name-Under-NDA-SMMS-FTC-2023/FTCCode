@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-//setting runtime for the motors during autop
+//autonomous code
 @Autonomous(name="autonomous phase", group="Linear Opmode")
 public class AutonomousOpMode_Linear extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -25,7 +25,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
 
-    //maps code to motors
+    //Retrieves motors and servos from the robot controller.
     @Override
     public void runOpMode() {
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
@@ -45,7 +45,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-
+        //actives code
         while (opModeIsActive()) {
             double max;
 
@@ -66,7 +66,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                 max = Math.max(Math.abs(rightBackDrive), max);
                 max = Math.max(Math.abs(ClawHeight), max);
 
-                //speed?
+                //Normalizes speed of motors
                 if(max>1.0) {
                     leftFrontDrive /= max;
                     rightFrontDrive /= max;
@@ -75,14 +75,14 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                     ClawHeight /= max;
                 }
                 
-                //set motor power?
+                //sets motor power
                 leftFrontDrive.setPower(leftFrontPower);
                 rightFrontDrive.setPower(rightFrontPower);
                 leftBackDrive.setPower(leftBackPower);
                 rightBackDrive.setPower(rightBackPower);
                 ClawHeight.setPower(ClawHeightPower);
 
-                //saving the data for the motors?
+                //Shows data on the DS
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Front left/right" , "%.2f", leftFrontPower, rightFrontPower);
                 telemetry.addData("Back left/right" , "%.2f", leftBackPower, rightBackPower);
