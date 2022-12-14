@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+//importing the needed variables.
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
