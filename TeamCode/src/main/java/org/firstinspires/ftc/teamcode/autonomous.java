@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.List;
@@ -13,6 +14,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceControl;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceControl.Mode;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl.Mode;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
+
 
 //autonomous code
 @Autonomous(name="autonomous phase", group="Linear Opmode")
@@ -88,6 +98,10 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                 telemetry.addData("Back left/right" , "%.2f", leftBackPower, rightBackPower);
                 telemetry.addDada("Axial/Lateral/Yaw" , "%.2f", axial, lateral, yaw);
                 telemetry.addData("Claw Height" , "%.2f", ClawHeightPower);
+                telemetry.addData(isExposureSupported());
+                telemetry.addData(isModeSupported(mode.Manual));
+                telemetry.addData(isFocusLengthSupported());
+                telemetry.addData(isFocusModeSupported(mode.Manual));
                 telemetry.update();
         }
     }
