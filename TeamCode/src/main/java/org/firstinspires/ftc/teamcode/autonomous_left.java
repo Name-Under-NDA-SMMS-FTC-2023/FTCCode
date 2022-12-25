@@ -65,7 +65,7 @@ public class autonomous_left extends LinearOpMode {
                 double ClawHeightPower;
 
                 if (runtime > 0 && runtime < 1) {
-                    yaw=1;
+                    yaw=-1;
                 }
                 else if (runtime > 1 && runtime <3) {
                     yaw=0;
