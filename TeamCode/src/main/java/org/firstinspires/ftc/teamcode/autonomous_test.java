@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode;
-
 //importing the needed variables.
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -20,15 +18,14 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceCont
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl.Mode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
 Djava.library.path=/Users/<YOUR_USERNAME>/Library/Python/3.9/lib/python/site-packages/jep
-public static final String VUFORIA_LICENSE_KEY = "AV30Ctb/////AAABmRiz7bH9QEWLjtsiGkKgKIZ4N4BR7dV9S8/x48RfBEXaL3clCgsI5g8kDnWykPIHUl1yeW/uTdkbGn8fpN2PlooQcVjKkjkzFz8PaMQfEP6TEb4zbSd0sSM0qzvw0KumTdmAlrtJ8ToT8R+422OwpzaAQrCNt6VdRsglQNPw/lqqRqHM8rvdWwzn0Hql3xJNUD47m1/ZF1R/ZxZ3CWwzT2nqSzEh0i6zxWqS8XXaVBCxHOx0ud9xp+UZfD8HQiuk0XlJaklgcmGAPiBYOUEXAjTzIDuTYv43LAwq9MXzidUh63DCUounB2fo1wA4U/ZvDqfTs0nF0dsNpdl1VbFbfJ7hdn1td8enRGfLd8JlQp+Q";
-
-
 
 //autonomous code
-@Autonomous(name="autonomous phase", group="Linear Opmode")
-public class AutonomousOpMode_Linear extends LinearOpMode {
+@Autonomous(name="autonomous test")
+public class autonomous_test extends LinearOpMode {
+    
+    public static final String VUFORIA_LICENSE_KEY = "AV30Ctb/////AAABmRiz7bH9QEWLjtsiGkKgKIZ4N4BR7dV9S8/x48RfBEXaL3clCgsI5g8kDnWykPIHUl1yeW/uTdkbGn8fpN2PlooQcVjKkjkzFz8PaMQfEP6TEb4zbSd0sSM0qzvw0KumTdmAlrtJ8ToT8R+422OwpzaAQrCNt6VdRsglQNPw/lqqRqHM8rvdWwzn0Hql3xJNUD47m1/ZF1R/ZxZ3CWwzT2nqSzEh0i6zxWqS8XXaVBCxHOx0ud9xp+UZfD8HQiuk0XlJaklgcmGAPiBYOUEXAjTzIDuTYv43LAwq9MXzidUh63DCUounB2fo1wA4U/ZvDqfTs0nF0dsNpdl1VbFbfJ7hdn1td8enRGfLd8JlQp+Q";
+
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
@@ -38,7 +35,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
     private Servo Claw = null;
     public void runScript(String pythonScriptFullPath) {
         try (Interpreter interp = new SharedInterpreter()) {
-            interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomous.py)
+            interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomous.py);
         } catch (JepException e) {
             //do something with exception
         }
@@ -47,7 +44,7 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.75f;
+        tfodParameters.minResultConfidence = 0.9f;
         tfodParameters.isModelTensorFlow2 = true;
         tfodParameters.inputSize = 300;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
@@ -69,7 +66,6 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
-        Claw.setDirection(Servo.Direction.FORWARD);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -119,9 +115,9 @@ public class AutonomousOpMode_Linear extends LinearOpMode {
                 telemetry.addDada("Axial/Lateral/Yaw" , "%.2f", axial, lateral, yaw);
                 telemetry.addData("Claw Height" , "%.2f", ClawHeightPower);
                 telemetry.addData(isExposureSupported());
-                telemetry.addData(isModeSupported(mode.Manual));
+                telemetry.addData(isModeSupported(mode.Auto));
                 telemetry.addData(isFocusLengthSupported());
-                telemetry.addData(isFocusModeSupported(mode.Manual));
+                telemetry.addData(isFocusModeSupported(mode.Auto));
                 telemetry.update();
         }
     }
