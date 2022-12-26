@@ -18,43 +18,19 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceCont
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl.Mode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;
-Djava.library.path=/Users/<YOUR_USERNAME>/Library/Python/3.9/lib/python/site-packages/jep
 
-//autonomous code
-@Autonomous(name="autonomous test")
-@Disabled
-public class autonomous_test extends LinearOpMode {
-    
-    public static final String VUFORIA_LICENSE_KEY = "AV30Ctb/////AAABmRiz7bH9QEWLjtsiGkKgKIZ4N4BR7dV9S8/x48RfBEXaL3clCgsI5g8kDnWykPIHUl1yeW/uTdkbGn8fpN2PlooQcVjKkjkzFz8PaMQfEP6TEb4zbSd0sSM0qzvw0KumTdmAlrtJ8ToT8R+422OwpzaAQrCNt6VdRsglQNPw/lqqRqHM8rvdWwzn0Hql3xJNUD47m1/ZF1R/ZxZ3CWwzT2nqSzEh0i6zxWqS8XXaVBCxHOx0ud9xp+UZfD8HQiuk0XlJaklgcmGAPiBYOUEXAjTzIDuTYv43LAwq9MXzidUh63DCUounB2fo1wA4U/ZvDqfTs0nF0dsNpdl1VbFbfJ7hdn1td8enRGfLd8JlQp+Q";
+@Autonomous(name="Autonomous Left", group="Linear Opmode")
+public class autonomous_left extends LinearOpMode {
+        public static final String VUFORIA_LICENSE_KEY = "AV30Ctb/////AAABmRiz7bH9QEWLjtsiGkKgKIZ4N4BR7dV9S8/x48RfBEXaL3clCgsI5g8kDnWykPIHUl1yeW/uTdkbGn8fpN2PlooQcVjKkjkzFz8PaMQfEP6TEb4zbSd0sSM0qzvw0KumTdmAlrtJ8ToT8R+422OwpzaAQrCNt6VdRsglQNPw/lqqRqHM8rvdWwzn0Hql3xJNUD47m1/ZF1R/ZxZ3CWwzT2nqSzEh0i6zxWqS8XXaVBCxHOx0ud9xp+UZfD8HQiuk0XlJaklgcmGAPiBYOUEXAjTzIDuTYv43LAwq9MXzidUh63DCUounB2fo1wA4U/ZvDqfTs0nF0dsNpdl1VbFbfJ7hdn1td8enRGfLd8JlQp+Q";
 
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor rightBackDrive = null;
-    private DcMotor ClawHeight = null;
-    private Servo Claw = null;
-    public void runScript(String pythonScriptFullPath) {
-        try (Interpreter interp = new SharedInterpreter()) {
-            interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomous.py);
-        } catch (JepException e) {
-            //do something with exception
-        }
-    }
-    private void initTfod() {
-        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-            "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.9f;
-        tfodParameters.isModelTensorFlow2 = true;
-        tfodParameters.inputSize = 300;
-        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-
-        // Use loadModelFromFile() if you have downloaded a custom team model to the Robot Controller's FLASH.
-        tfod.loadModelFromFile(best.pt, LABELS);
-    }
-    //Retrieves motors and servos from the robot controller.
-    @Override
+        private ElapsedTime runtime = new ElapsedTime();
+        private DcMotor leftFrontDrive = null;
+        private DcMotor leftBackDrive = null;
+        private DcMotor rightFrontDrive = null;
+        private DcMotor rightBackDrive = null;
+        private DcMotor ClawHeight = null;
+        private Servo Claw = null;
+        @Override
     public void runOpMode() {
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
@@ -88,6 +64,17 @@ public class autonomous_test extends LinearOpMode {
                 double rightBackPower = axial+lateral-yaw;
                 double ClawHeightPower;
 
+                if (runtime > 0 && runtime < 1) {
+                    yaw=-1;
+                }
+                else if (runtime > 1 && runtime <3) {
+                    yaw=0;
+                    axial=1;
+                }
+                else {
+                    idle()
+                }
+
                 max = Math.max(Math.abs(leftFrontDrive), Math.abs(rightFrontDrive));
                 max = Math.max(Math.abs(leftBackDrive), max);
                 max = Math.max(Math.abs(rightBackDrive), max);
@@ -120,6 +107,5 @@ public class autonomous_test extends LinearOpMode {
                 telemetry.addData(isFocusLengthSupported());
                 telemetry.addData(isFocusModeSupported(mode.Auto));
                 telemetry.update();
-        }
     }
 }
