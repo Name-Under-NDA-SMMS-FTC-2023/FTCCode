@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.List;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
+/*import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceCont
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl.Mode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;
-Djava.library.path=/Users/<YOUR_USERNAME>/Library/Python/3.9/lib/python/site-packages/jep
+Djava.library.path=/Users/<YOUR_USERNAME>/Library/Python/3.9/lib/python/site-packages/jep*/
 
 //autonomous code
 @Autonomous(name="autonomous test")
@@ -34,7 +34,7 @@ public class autonomous_test extends LinearOpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
-    public void runScript(String pythonScriptFullPath) {
+    /*public void runScript(String pythonScriptFullPath) {
         try (Interpreter interp = new SharedInterpreter()) {
             interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomous.py);
         } catch (JepException e) {
@@ -52,7 +52,7 @@ public class autonomous_test extends LinearOpMode {
 
         // Use loadModelFromFile() if you have downloaded a custom team model to the Robot Controller's FLASH.
         tfod.loadModelFromFile(best.pt, LABELS);
-    }
+    }*/
     //Retrieves motors and servos from the robot controller.
     @Override
     public void runOpMode() {
@@ -76,9 +76,9 @@ public class autonomous_test extends LinearOpMode {
         while (opModeIsActive()) {
             double max;
 
-                double axial;
-                double lateral;
-                double yaw;
+                double axial = 0;
+                double lateral = 0;
+                double yaw = 0;
                 double height;
                 double INITposition = 0;
                 double position;
@@ -86,20 +86,20 @@ public class autonomous_test extends LinearOpMode {
                 double rightFrontPower = axial-lateral-yaw;
                 double leftBackPower = axial-lateral+yaw;
                 double rightBackPower = axial+lateral-yaw;
-                double ClawHeightPower;
+                double ClawHeightPower = 0;
 
-                max = Math.max(Math.abs(leftFrontDrive), Math.abs(rightFrontDrive));
-                max = Math.max(Math.abs(leftBackDrive), max);
-                max = Math.max(Math.abs(rightBackDrive), max);
-                max = Math.max(Math.abs(ClawHeight), max);
+                max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+                max = Math.max(Math.abs(leftBackPower), max);
+                max = Math.max(Math.abs(rightBackPower), max);
+                max = Math.max(Math.abs(ClawHeightPower), max);
 
                 //Normalizes speed of motors
                 if(max>1.0) {
-                    leftFrontDrive /= max;
-                    rightFrontDrive /= max;
-                    leftBackDrive /= max;
-                    rightBackDrive /= max;
-                    ClawHeight /= max;
+                    leftFrontPower /= max;
+                    rightFrontPower /= max;
+                    leftBackPower /= max;
+                    rightBackPower /= max;
+                    ClawHeightPower /= max;
                 }
                 
                 //sets motor power
@@ -113,12 +113,12 @@ public class autonomous_test extends LinearOpMode {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Front left/right" , "%.2f", leftFrontPower, rightFrontPower);
                 telemetry.addData("Back left/right" , "%.2f", leftBackPower, rightBackPower);
-                telemetry.addDada("Axial/Lateral/Yaw" , "%.2f", axial, lateral, yaw);
+                telemetry.addData("Axial/Lateral/Yaw" , "%.2f", axial, lateral, yaw);
                 telemetry.addData("Claw Height" , "%.2f", ClawHeightPower);
-                telemetry.addData(isExposureSupported());
+                /*telemetry.addData(isExposureSupported());
                 telemetry.addData(isModeSupported(mode.Auto));
                 telemetry.addData(isFocusLengthSupported());
-                telemetry.addData(isFocusModeSupported(mode.Auto));
+                telemetry.addData(isFocusModeSupported(mode.Auto));*/
                 telemetry.update();
         }
     }
