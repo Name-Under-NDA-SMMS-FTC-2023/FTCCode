@@ -64,10 +64,10 @@ public class autonomous_left extends LinearOpMode {
                 double rightBackPower = axial+lateral-yaw;
                 double ClawHeightPower;
 
-                if (runtime > 0 && runtime < 1) {
+                if (runtime.seconds() > 0 && runtime.seconds() < 1) {
                     yaw=-1;
                 }
-                else if (runtime > 1 && runtime <3) {
+                else if (runtime.seconds() > 1 && runtime.seconds() <3) {
                     yaw=0;
                     axial=1;
                 }
