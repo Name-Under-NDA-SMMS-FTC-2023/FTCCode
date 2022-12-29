@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.List;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
+/*import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -17,8 +17,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceCont
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceControl.Mode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl.Mode;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;*/
 
 /**
  * This file contains an example of a Linear "OpMode".
@@ -92,14 +91,14 @@ public class teleop extends LinearOpMode {
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
-        msStuckDetectStop = 2500;
+        /*msStuckDetectStop = 2500;
 
         VuforiaLocalizer.Parameters vuforiaParams = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         vuforiaParams.vuforiaLicenseKey = VUFORIA_LICENSE_KEY;
         vuforiaParams.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         VuforiaLocalizer vuforia = ClassFactory.getInstance().createVuforia(vuforiaParams);
 
-        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
+        FtcDashboard.getInstance().startCameraStream(vuforia, 0);*/
         
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -113,7 +112,7 @@ public class teleop extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_trigger - gamepad1.left_trigger;
             double height = -gamepad1.right_stick_y;
@@ -185,7 +184,7 @@ public class teleop extends LinearOpMode {
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
             telemetry.addData("Height", "%4.2f", height);
             telemetry.addData("Are buttons not pressed?", atRest());
-            telemety.addData("Claw Position", Claw.getPosition());
+            telemetry.addData("Claw Position", Claw.getPosition());
             telemetry.update();
         }
     }
