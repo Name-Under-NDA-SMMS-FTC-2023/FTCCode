@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.List;
+import org.python.util.PythonInterpreter;
 /*import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WhiteBalanceCont
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.FocusControl.Mode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.PtzControl;
-Djava.library.path=/Users/<YOUR_USERNAME>/Library/Python/3.9/lib/python/site-packages/jep*/
+Djava.library.path=/home/codespace/.local/bin/jep*/
 
 //autonomous code
 @Autonomous(name="autonomous test")
@@ -34,14 +35,14 @@ public class autonomous_test extends LinearOpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
-    /*public void runScript(String pythonScriptFullPath) {
+    public void runScript(String pythonScriptFullPath) {
         try (Interpreter interp = new SharedInterpreter()) {
             interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomous.py);
         } catch (JepException e) {
             //do something with exception
         }
     }
-    private void initTfod() {
+    /*private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
