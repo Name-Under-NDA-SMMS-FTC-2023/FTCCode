@@ -176,11 +176,24 @@ public class teleop extends LinearOpMode {
                     Claw.setPosition(currentPosition - position/100);
                 }
             }*/
+            double currentPosition = Claw.getPosition();
+
             if (gamepad1.a) {
-                double currentPosition = Claw.getPosition();
-                Claw.setPosition(currentPosition +1/100);
+                try {
+                    Claw.setPosition(currentPosition +1/100);
+                }
+                catch (Exception e) {
+                    telemetry.addData("Error", e.getMessage());
+                    telemetry.update();
+                }
             } else if (gamepad1.b) {
-                Claw.setPosition(currentPosition -1/100);
+                try {
+                    Claw.setPosition(currentPosition -1/100);
+                }
+                catch (Exception e) {
+                    telemetry.addData("Error", e.getMessage());
+                    telemetry.update();
+                }
             }
 
             // Show the elapsed game time and wheel power.
