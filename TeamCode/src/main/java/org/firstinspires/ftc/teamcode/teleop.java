@@ -114,7 +114,7 @@ public class teleop extends LinearOpMode {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_trigger - gamepad1.left_trigger;
+            double yaw     =  gamepad1.left_trigger - gamepad1.right_trigger;
             double height = -gamepad1.right_stick_y;
             //servo for claw setup which sucks
             double INITposition = 0.0;
@@ -166,7 +166,7 @@ public class teleop extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
             ClawHeight.setPower(ClawHeightPower);
 
-            double position = gamepad1.right_stick_x;
+           /*  double position = gamepad1.right_stick_x;
 
             if (position != 0) {
                 double currentPosition = Claw.getPosition();
@@ -175,6 +175,12 @@ public class teleop extends LinearOpMode {
                 } else if (position < 0) {
                     Claw.setPosition(currentPosition - position/100);
                 }
+            }*/
+            if (gamepad1.a) {
+                double currentPosition = Claw.getPosition();
+                Claw.setPosition(currentPosition +1/100);
+            } else if (gamepad1.b) {
+                Claw.setPosition(currentPosition -1/100);
             }
 
             // Show the elapsed game time and wheel power.
