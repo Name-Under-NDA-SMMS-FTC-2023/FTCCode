@@ -168,13 +168,9 @@ public class teleop extends LinearOpMode {
 
            /*  double position = gamepad1.right_stick_x;
 
-            if (position != 0) {
+            if (gamepad1.x) {
                 double currentPosition = Claw.getPosition();
-                if (position > 0) {
-                    Claw.setPosition(currentPosition + position/100);
-                } else if (position < 0) {
-                    Claw.setPosition(currentPosition - position/100);
-                }
+                Claw.setPosition(currentPosition + position/100);
             }*/
             double currentPosition = Claw.getPosition();
 
