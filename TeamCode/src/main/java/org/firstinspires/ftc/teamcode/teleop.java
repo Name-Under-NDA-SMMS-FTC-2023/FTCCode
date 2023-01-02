@@ -166,31 +166,19 @@ public class teleop extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
             ClawHeight.setPower(ClawHeightPower);
 
-           /*  double position = gamepad1.right_stick_x;
-
-            if (gamepad1.x) {
-                double currentPosition = Claw.getPosition();
-                Claw.setPosition(currentPosition + position/100);
-            }*/
+             double position = gamepad1.right_stick_x;
             double currentPosition = Claw.getPosition();
 
-            if (gamepad1.a) {
+            if (position != 0) {
                 try {
-                    Claw.setPosition(currentPosition +1/100);
-                }
-                catch (Exception e) {
-                    telemetry.addData("Error", e.getMessage());
-                    telemetry.update();
-                }
-            } else if (gamepad1.b) {
-                try {
-                    Claw.setPosition(currentPosition -1/100);
+                    Claw.setPosition(currentPosition + position/100);
                 }
                 catch (Exception e) {
                     telemetry.addData("Error", e.getMessage());
                     telemetry.update();
                 }
             }
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
