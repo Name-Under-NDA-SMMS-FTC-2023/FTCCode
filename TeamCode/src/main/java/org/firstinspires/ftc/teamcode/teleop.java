@@ -113,11 +113,9 @@ public class teleop extends LinearOpMode {
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  gamepad1.left_stick_x;
+            double lateral =  -gamepad1.left_stick_x;
             double yaw     =  gamepad1.left_trigger - gamepad1.right_trigger;
             double height = -gamepad1.right_stick_y;
-            //servo for claw setup which sucks
-            double INITposition = 0.0;
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -166,35 +164,19 @@ public class teleop extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
             ClawHeight.setPower(ClawHeightPower);
 
-           /*  double position = gamepad1.right_stick_x;
-
-            if (position != 0) {
-                double currentPosition = Claw.getPosition();
-                if (position > 0) {
-                    Claw.setPosition(currentPosition + position/100);
-                } else if (position < 0) {
-                    Claw.setPosition(currentPosition - position/100);
-                }
-            }*/
+             double position = gamepad1.right_stick_x;
             double currentPosition = Claw.getPosition();
 
-            if (gamepad1.a) {
+            if (position != 0) {
                 try {
-                    Claw.setPosition(currentPosition +1/100);
-                }
-                catch (Exception e) {
-                    telemetry.addData("Error", e.getMessage());
-                    telemetry.update();
-                }
-            } else if (gamepad1.b) {
-                try {
-                    Claw.setPosition(currentPosition -1/100);
+                    Claw.setPosition(currentPosition + position/100);
                 }
                 catch (Exception e) {
                     telemetry.addData("Error", e.getMessage());
                     telemetry.update();
                 }
             }
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
