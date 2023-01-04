@@ -137,7 +137,6 @@ public class teleop extends LinearOpMode {
                 rightFrontPower /= max;
                 leftBackPower   /= max;
                 rightBackPower  /= max;
-                ClawHeightPower /= max;
             }
 
             // This is test code:
@@ -169,7 +168,7 @@ public class teleop extends LinearOpMode {
 
             if (position != 0) {
                 try {
-                    Claw.setPosition(currentPosition + position/100);
+                    Claw.setPosition(currentPosition + position/50);
                 }
                 catch (Exception e) {
                     telemetry.addData("Error", e.getMessage());
