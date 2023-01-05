@@ -37,7 +37,7 @@ public class autonomous_test extends LinearOpMode {
     private Servo Claw = null;
     public void runScript(String pythonScriptFullPath) {
         try (Interpreter interp = new SharedInterpreter()) {
-            interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomous.py);
+            interp.runScript(FTCCodr/src/main/java/org/firstinspires/ftc/teamcode/autonomouspython.py);
         } catch (JepException e) {
             //do something with exception
         }
