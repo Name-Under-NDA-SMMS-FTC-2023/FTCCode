@@ -25,6 +25,11 @@ public class autonomous_signal_sleeve extends LinearOpMode
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
+    public static final int DC_MOTOR_COUNTS_PER_REV = 28;
+    public static final int DC_MOTOR_GEAR_RATIO = 2400;
+    public static final int DC_MOTOR_COUNTS = (int)((DC_MOTOR_COUNTS_PER_REV * DC_MOTOR_GEAR_RATIO) / Math.PI);
+    public static final int DRIVETRAIN_WHEEL_DIAMETER = 4;
+    public static final int DRIVETRAIN_COUNTS_PER_INCH = DC_MOTOR_COUNTS / DRIVETRAIN_WHEEL_DIAMETER;
     public static final String VUFORIA_LICENSE_KEY = "AV30Ctb/////AAABmRiz7bH9QEWLjtsiGkKgKIZ4N4BR7dV9S8/x48RfBEXaL3clCgsI5g8kDnWykPIHUl1yeW/uTdkbGn8fpN2PlooQcVjKkjkzFz8PaMQfEP6TEb4zbSd0sSM0qzvw0KumTdmAlrtJ8ToT8R+422OwpzaAQrCNt6VdRsglQNPw/lqqRqHM8rvdWwzn0Hql3xJNUD47m1/ZF1R/ZxZ3CWwzT2nqSzEh0i6zxWqS8XXaVBCxHOx0ud9xp+UZfD8HQiuk0XlJaklgcmGAPiBYOUEXAjTzIDuTYv43LAwq9MXzidUh63DCUounB2fo1wA4U/ZvDqfTs0nF0dsNpdl1VbFbfJ7hdn1td8enRGfLd8JlQp+Q";
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -64,9 +69,36 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
-        double axial = 0;
-        double yaw = 0;
-        double lateral = 0;
+
+        public void drive(double speed, int inches, int power) {
+
+            int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
+            rightFrontDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(target);
+            rightBackDrive.setTargetPosition(target);
+            leftBackDrive.setTargetPosition(target);
+        
+        
+        }
+
+        public void turnleft(double radians) {
+            double radius = 2;
+            double distance = 2 * Math.PI * radius * radians;
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            rightFrontDrive.setTargetPosition(-target);
+            leftFrontDrive.setTargetPosition(target);
+            rightBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(target);
+        }
+        public void turnright(double radians) {
+            double radius = 2;
+            double distance = 2 * Math.PI * radius * radians;
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            rightFrontDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(-target);
+            rightBackDrive.setTargetPosition(target);
+            leftBackDrive.setTargetPosition(-target);
+        }
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -167,27 +199,20 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
         /* Actually do something useful */
         if(tagOfInterest == null){
-            while (runtime.seconds() <3) {
-            if (runtime.seconds() > 0 && runtime.seconds() < 1) {
-                yaw=-1;
-            }
-            else if (runtime.seconds() > 1 && runtime.seconds() <3) {
-                yaw=0;
-                axial=1;
-            }
-            else {
-                idle()
-            }
+            turnleft(Math.PI/2)
+            drive(1000, 24, 1)
         }else if(tagOfInterest.id == LEFT){
-            //left trajectory
-        }else if(tagOfInterest.id == MIDDLE){
-            //middle trajectory
-        }else{
-            //right trajectory
-        }
-
-
-    }        
+            drive(1000, 24, 1)
+            turnleft(Math.PI/2)
+            drive(1000,24,1)
+    }   else if(tagOfInterest.id == MIDDLE){
+            drive(1000, 24, 1)
+    }   else if(tagOfInterest.id == RIGHT){
+            drive(1000, 24, 1)
+            turnright(Math.PI/2)
+            drive(1000,24,1)
+    }
+}  
     //autonomous code stuff
     void tagToTelemetry(AprilTagDetection detection)
     {
