@@ -209,7 +209,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
             drive(1000, 24, 1)
     }   else if(tagOfInterest.id == RIGHT){
             drive(1000, 24, 1)
-            turnright(-Math.PI/2)
+            turnright(Math.PI/2)
             drive(1000,24,1)
     }
 }  
