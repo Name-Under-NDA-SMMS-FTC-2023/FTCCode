@@ -64,6 +64,9 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
+        double axial = 0;
+        double yaw = 0;
+        double lateral = 0;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -164,6 +167,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
         /* Actually do something useful */
         if(tagOfInterest == null){
+            while (runtime.seconds() <3) {
             if (runtime.seconds() > 0 && runtime.seconds() < 1) {
                 yaw=-1;
             }
