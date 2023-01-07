@@ -69,13 +69,8 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
-        double speed = 0;
-        int inches = 0;
-        double power = 0;
-        double radians = 0;
-        double radius = 2;
 
-        public void drive(speed, inches, power) {
+        public void drive(double speed, int inches, double power) {
 
         int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
         rightFrontDrive.setTargetPosition(target);
@@ -86,7 +81,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
     }
 
-        public void turnleft(radians) {
+        public void turnleft(double radians) {
         double distance = 2 * Math.PI * radius * radians;
         int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
         rightFrontDrive.setTargetPosition(-target);
@@ -94,7 +89,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightBackDrive.setTargetPosition(-target);
         leftBackDrive.setTargetPosition(target);
     }
-        public void turnright(radians) {
+        public void turnright(double radians) {
         double distance = 2 * Math.PI * radius * radians;
         int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
         rightFrontDrive.setTargetPosition(target);
