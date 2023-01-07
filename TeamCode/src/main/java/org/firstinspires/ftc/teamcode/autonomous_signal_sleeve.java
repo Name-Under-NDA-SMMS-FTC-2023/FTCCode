@@ -48,7 +48,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-     // Tag ID 1,2,3 from the 36h11 family
+    // Tag ID 1,2,3 from the 36h11 family
     int LEFT = 1;
     int MIDDLE = 2;
     int RIGHT = 3;
@@ -69,36 +69,39 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         ClawHeight.setDirection(DcMotor.Direction.FORWARD);
+        double speed = 0;
+        int inches = 0;
+        double power = 0;
+        double radians = 0;
+        double radius = 2;
 
-        public void drive(double speed, int inches, int power) {
+        public void drive(speed, inches, power) {
 
-            int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
-            rightFrontDrive.setTargetPosition(target);
-            leftFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(target);
-        
-        
-        }
+        int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
+        rightFrontDrive.setTargetPosition(target);
+        leftFrontDrive.setTargetPosition(target);
+        rightBackDrive.setTargetPosition(target);
+        leftBackDrive.setTargetPosition(target);
 
-        public void turnleft(double radians) {
-            double radius = 2;
-            double distance = 2 * Math.PI * radius * radians;
-            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(-target);
-            leftFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(-target);
-            leftBackDrive.setTargetPosition(target);
-        }
-        public void turnright(double radians) {
-            double radius = 2;
-            double distance = 2 * Math.PI * radius * radians;
-            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(target);
-            leftFrontDrive.setTargetPosition(-target);
-            rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(-target);
-        }
+
+    }
+
+        public void turnleft(radians) {
+        double distance = 2 * Math.PI * radius * radians;
+        int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+        rightFrontDrive.setTargetPosition(-target);
+        leftFrontDrive.setTargetPosition(target);
+        rightBackDrive.setTargetPosition(-target);
+        leftBackDrive.setTargetPosition(target);
+    }
+        public void turnright(radians) {
+        double distance = 2 * Math.PI * radius * radians;
+        int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+        rightFrontDrive.setTargetPosition(target);
+        leftFrontDrive.setTargetPosition(-target);
+        rightBackDrive.setTargetPosition(target);
+        leftBackDrive.setTargetPosition(-target);
+    }
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -205,14 +208,14 @@ public class autonomous_signal_sleeve extends LinearOpMode
             drive(1000, 24, 1)
             turnleft(Math.PI/2)
             drive(1000,24,1)
-    }   else if(tagOfInterest.id == MIDDLE){
+        }   else if(tagOfInterest.id == MIDDLE){
             drive(1000, 24, 1)
-    }   else if(tagOfInterest.id == RIGHT){
+        }   else if(tagOfInterest.id == RIGHT){
             drive(1000, 24, 1)
             turnright(Math.PI/2)
             drive(1000,24,1)
+        }
     }
-}  
     //autonomous code stuff
     void tagToTelemetry(AprilTagDetection detection)
     {

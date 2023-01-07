@@ -182,8 +182,7 @@ public class teleop extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
-            telemetry.addData("Height", "%4.2f", height);
-            telemetry.addData("Are buttons not pressed?", atRest());
+            telemetry.addData("Height", "%4.2f", ClawHeightPower);
             telemetry.addData("Claw Position", Claw.getPosition());
             telemetry.update();
         }
