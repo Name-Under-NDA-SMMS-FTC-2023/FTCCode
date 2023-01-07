@@ -115,7 +115,7 @@ public class teleop extends LinearOpMode {
             double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  -gamepad1.left_stick_x;
             double yaw     =  gamepad1.left_trigger - gamepad1.right_trigger;
-            double height = -gamepad1.right_stick_y;
+            double height = gamepad1.right_stick_y;
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -168,7 +168,7 @@ public class teleop extends LinearOpMode {
 
             if (position != 0) {
                 try {
-                    Claw.setPosition(currentPosition + position/50);
+                    Claw.setPosition(currentPosition + position/500);
                 }
                 catch (Exception e) {
                     telemetry.addData("Error", e.getMessage());
