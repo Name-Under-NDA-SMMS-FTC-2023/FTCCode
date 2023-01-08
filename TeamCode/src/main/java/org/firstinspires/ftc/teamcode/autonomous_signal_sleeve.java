@@ -54,23 +54,18 @@ public class autonomous_signal_sleeve extends LinearOpMode
     int RIGHT = 3;
 
     AprilTagDetection tagOfInterest = null;
-
-    @Override
-    public void runOpMode()
-    {
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        ClawHeight = hardwareMap.get(DcMotor.class, "Claw_height");
-        Claw = hardwareMap.get(Servo.class, "Claw");
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        ClawHeight.setDirection(DcMotor.Direction.FORWARD);
-
-        public void drive(double speed, int inches, double power) {
+    leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
+    leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
+    rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
+    rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+    ClawHeight = hardwareMap.get(DcMotor.class, "Claw_height");
+    Claw = hardwareMap.get(Servo.class, "Claw");
+    leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+    leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+    rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+    rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+    ClawHeight.setDirection(DcMotor.Direction.FORWARD);
+    public void drive(double speed, int inches, double power) {
 
         int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
         rightFrontDrive.setTargetPosition(target);
@@ -80,8 +75,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
 
     }
-
-        public void turnleft(double radians) {
+    public void turnleft(double radians) {
         double distance = 2 * Math.PI * radius * radians;
         int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
         rightFrontDrive.setTargetPosition(-target);
@@ -89,7 +83,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightBackDrive.setTargetPosition(-target);
         leftBackDrive.setTargetPosition(target);
     }
-        public void turnright(double radians) {
+    public void turnright(double radians) {
         double distance = 2 * Math.PI * radius * radians;
         int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
         rightFrontDrive.setTargetPosition(target);
@@ -97,6 +91,10 @@ public class autonomous_signal_sleeve extends LinearOpMode
         rightBackDrive.setTargetPosition(target);
         leftBackDrive.setTargetPosition(-target);
     }
+    @Override
+    public void runOpMode()
+    {
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -116,7 +114,16 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
             }
         });
+        public void drive(double speed, int inches, double power) {
 
+        int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
+        rightFrontDrive.setTargetPosition(target);
+        leftFrontDrive.setTargetPosition(target);
+        rightBackDrive.setTargetPosition(target);
+        leftBackDrive.setTargetPosition(target);
+
+
+    }
         telemetry.setMsTransmissionInterval(50);
 
         /*
