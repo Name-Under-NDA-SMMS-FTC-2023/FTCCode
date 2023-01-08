@@ -68,6 +68,10 @@ public class autonomous_signal_sleeve extends LinearOpMode
     public void drive(double speed, int inches, double power) {
 
         int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
+        rightFrontDrive.setMaxSpeed(speed);
+        leftFrontDrive.setMaxSpeed(speed);
+        rightBackDrive.setMaxSpeed(speed);
+        leftBackDrive.setMaxSpeed(speed);
         rightFrontDrive.setTargetPosition(target);
         leftFrontDrive.setTargetPosition(target);
         rightBackDrive.setTargetPosition(target);
@@ -94,7 +98,11 @@ public class autonomous_signal_sleeve extends LinearOpMode
     @Override
     public void runOpMode()
     {
-
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ClawHeight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -205,17 +213,17 @@ public class autonomous_signal_sleeve extends LinearOpMode
         /* Actually do something useful */
         if(tagOfInterest == null){
             turnleft(Math.PI/2)
-            drive(1000, 24, 1)
+            drive(1000, 24, 0.5)
         }else if(tagOfInterest.id == LEFT){
-            drive(1000, 24, 1)
+            drive(1000, 24, 0.5)
             turnleft(Math.PI/2)
-            drive(1000,24,1)
+            drive(1000,24,0.5)
         }   else if(tagOfInterest.id == MIDDLE){
-            drive(1000, 24, 1)
+            drive(1000, 24, 0.5)
         }   else if(tagOfInterest.id == RIGHT){
-            drive(1000, 24, 1)
+            drive(1000, 24, 0.5)
             turnright(Math.PI/2)
-            drive(1000,24,1)
+            drive(1000,24,0.5)
         }
     }
     //autonomous code stuff
