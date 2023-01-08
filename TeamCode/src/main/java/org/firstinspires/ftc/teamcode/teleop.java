@@ -116,6 +116,7 @@ public class teleop extends LinearOpMode {
             double lateral =  -gamepad1.left_stick_x;
             double yaw     =  gamepad1.left_trigger - gamepad1.right_trigger;
             double height = gamepad1.right_stick_y;
+
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -124,6 +125,26 @@ public class teleop extends LinearOpMode {
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
             double ClawHeightPower = height;
+
+            if (gamepad1.left_bumper) {
+                leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            else if (gamepad1.right_bumper) {
+                leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            }
+            else if (gamepad1.b) {
+                ClawHeight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                private ElapsedTime floattime = new ElapsedTime();
+                if (floattime > 2) {
+                    ClawHeight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                }
+            }
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
