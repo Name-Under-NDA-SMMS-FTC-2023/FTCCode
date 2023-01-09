@@ -153,7 +153,7 @@ public class teleop extends LinearOpMode {
             max = Math.max(max, Math.abs(rightBackPower));
             max = Math.max(max, Math.abs(ClawHeightPower));
 
-            if (max > 0.8) {
+            if (max > 1) {
                 leftFrontPower  /= max;
                 rightFrontPower /= max;
                 leftBackPower   /= max;
