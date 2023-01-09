@@ -236,5 +236,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+        telemetry.addLine(String.format("Front encoders left, right = %d, %d", leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition()));
+        telemetry.addLine(String.format("Back encoders left, right = %d, %d", leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition()));
     }
 }
