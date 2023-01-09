@@ -65,36 +65,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
     rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
     rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
     ClawHeight.setDirection(DcMotor.Direction.FORWARD);
-    public void drive(double speed, int inches, double power) {
-
-        int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
-        rightFrontDrive.setMaxSpeed(speed);
-        leftFrontDrive.setMaxSpeed(speed);
-        rightBackDrive.setMaxSpeed(speed);
-        leftBackDrive.setMaxSpeed(speed);
-        rightFrontDrive.setTargetPosition(target);
-        leftFrontDrive.setTargetPosition(target);
-        rightBackDrive.setTargetPosition(target);
-        leftBackDrive.setTargetPosition(target);
-
-
-    }
-    public void turnleft(double radians) {
-        double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
-        int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-        rightFrontDrive.setTargetPosition(-target);
-        leftFrontDrive.setTargetPosition(target);
-        rightBackDrive.setTargetPosition(-target);
-        leftBackDrive.setTargetPosition(target);
-    }
-    public void turnright(double radians) {
-        double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
-        int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-        rightFrontDrive.setTargetPosition(target);
-        leftFrontDrive.setTargetPosition(-target);
-        rightBackDrive.setTargetPosition(target);
-        leftBackDrive.setTargetPosition(-target);
-    }
+ 
     @Override
     public void runOpMode()
     {
@@ -122,6 +93,8 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
             }
         });
+        
+        @Override
         public void drive(double speed, int inches, double power) {
 
         int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
@@ -131,7 +104,27 @@ public class autonomous_signal_sleeve extends LinearOpMode
         leftBackDrive.setTargetPosition(target);
 
 
-    }
+        }
+        @Override
+        public void turnleft(double radians) {
+            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            rightFrontDrive.setTargetPosition(-target);
+            leftFrontDrive.setTargetPosition(target);
+            rightBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(target);
+        }
+        @Override
+        public void turnright(double radians) {
+            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            rightFrontDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(-target);
+            rightBackDrive.setTargetPosition(target);
+            leftBackDrive.setTargetPosition(-target);
+        }
+
+
         telemetry.setMsTransmissionInterval(50);
 
         /*
