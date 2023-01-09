@@ -80,7 +80,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
     }
     public void turnleft(double radians) {
-        double distance = 2 * Math.PI * radius * radians;
+        double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
         int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
         rightFrontDrive.setTargetPosition(-target);
         leftFrontDrive.setTargetPosition(target);
@@ -88,7 +88,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
         leftBackDrive.setTargetPosition(target);
     }
     public void turnright(double radians) {
-        double distance = 2 * Math.PI * radius * radians;
+        double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
         int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
         rightFrontDrive.setTargetPosition(target);
         leftFrontDrive.setTargetPosition(-target);
@@ -213,17 +213,17 @@ public class autonomous_signal_sleeve extends LinearOpMode
         /* Actually do something useful */
         if(tagOfInterest == null){
             turnleft(Math.PI/2)
-            drive(1000, 24, 0.5)
+            drive(1000, 24, 0.7)
         }else if(tagOfInterest.id == LEFT){
-            drive(1000, 24, 0.5)
+            drive(1000, 24, 0.7)
             turnleft(Math.PI/2)
-            drive(1000,24,0.5)
+            drive(1000,24,0.7)
         }   else if(tagOfInterest.id == MIDDLE){
-            drive(1000, 24, 0.5)
+            drive(1000, 24, 0.7)
         }   else if(tagOfInterest.id == RIGHT){
-            drive(1000, 24, 0.5)
+            drive(1000, 24, 0.7)
             turnright(Math.PI/2)
-            drive(1000,24,0.5)
+            drive(1000,24,0.7)
         }
     }
     //autonomous code stuff
