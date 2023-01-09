@@ -115,7 +115,8 @@ public class teleop extends LinearOpMode {
             double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  -gamepad1.left_stick_x;
             double yaw     =  gamepad1.left_trigger - gamepad1.right_trigger;
-            double height = -gamepad1.right_stick_y;
+            double height = gamepad1.right_stick_y;
+
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -125,6 +126,26 @@ public class teleop extends LinearOpMode {
             double rightBackPower  = axial + lateral - yaw;
             double ClawHeightPower = height;
 
+            if (gamepad1.left_bumper) {
+                leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            else if (gamepad1.right_bumper) {
+                leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            }
+            else if (gamepad1.b) {
+                ClawHeight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                private ElapsedTime floattime = new ElapsedTime();
+                if (floattime > 2) {
+                    ClawHeight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                }
+            }
+
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
             max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
@@ -132,7 +153,7 @@ public class teleop extends LinearOpMode {
             max = Math.max(max, Math.abs(rightBackPower));
             max = Math.max(max, Math.abs(ClawHeightPower));
 
-            if (max > 0.8) {
+            if (max > 1) {
                 leftFrontPower  /= max;
                 rightFrontPower /= max;
                 leftBackPower   /= max;
@@ -168,7 +189,7 @@ public class teleop extends LinearOpMode {
 
             if (position != 0) {
                 try {
-                    Claw.setPosition(currentPosition + position/50);
+                    Claw.setPosition(currentPosition + position/500);
                 }
                 catch (Exception e) {
                     telemetry.addData("Error", e.getMessage());
@@ -182,8 +203,7 @@ public class teleop extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Axial/Lateral/Yaw", "%4.2f, %4.2f, %4.2f", axial, lateral, yaw);
-            telemetry.addData("Height", "%4.2f", height);
-            telemetry.addData("Are buttons not pressed?", atRest());
+            telemetry.addData("Height", "%4.2f", ClawHeightPower);
             telemetry.addData("Claw Position", Claw.getPosition());
             telemetry.update();
         }
