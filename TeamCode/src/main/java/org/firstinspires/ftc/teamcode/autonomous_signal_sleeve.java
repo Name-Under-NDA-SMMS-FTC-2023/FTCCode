@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+import java.util.List;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -65,7 +65,32 @@ public class autonomous_signal_sleeve extends LinearOpMode
     rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
     rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
     ClawHeight.setDirection(DcMotor.Direction.FORWARD);
- 
+         public void drive(double speed, int inches, double power) {
+
+        int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
+        rightFrontDrive.setTargetPosition(target);
+        leftFrontDrive.setTargetPosition(target);
+        rightBackDrive.setTargetPosition(target);
+        leftBackDrive.setTargetPosition(target);
+
+
+        }        
+        public void turnleft(double radians) {
+            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            rightFrontDrive.setTargetPosition(-target);
+            leftFrontDrive.setTargetPosition(target);
+            rightBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(target);
+        }                
+        public void turnright(double radians) {
+            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            rightFrontDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(-target);
+            rightBackDrive.setTargetPosition(target);
+            leftBackDrive.setTargetPosition(-target);
+        }
     @Override
     public void runOpMode()
     {
@@ -77,6 +102,8 @@ public class autonomous_signal_sleeve extends LinearOpMode
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+
+ 
 
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -94,35 +121,9 @@ public class autonomous_signal_sleeve extends LinearOpMode
             }
         });
         
-        @Override
-        public void drive(double speed, int inches, double power) {
-
-        int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
-        rightFrontDrive.setTargetPosition(target);
-        leftFrontDrive.setTargetPosition(target);
-        rightBackDrive.setTargetPosition(target);
-        leftBackDrive.setTargetPosition(target);
 
 
-        }
-        @Override
-        public void turnleft(double radians) {
-            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
-            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(-target);
-            leftFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(-target);
-            leftBackDrive.setTargetPosition(target);
-        }
-        @Override
-        public void turnright(double radians) {
-            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
-            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(target);
-            leftFrontDrive.setTargetPosition(-target);
-            rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(-target);
-        }
+
 
 
         telemetry.setMsTransmissionInterval(50);
@@ -205,18 +206,18 @@ public class autonomous_signal_sleeve extends LinearOpMode
 
         /* Actually do something useful */
         if(tagOfInterest == null){
-            turnleft(Math.PI/2)
-            drive(1000, 24, 0.7)
+            turnleft(Math.PI/2);
+            drive(1000, 24, 0.7);
         }else if(tagOfInterest.id == LEFT){
-            drive(1000, 24, 0.7)
-            turnleft(Math.PI/2)
-            drive(1000,24,0.7)
+            drive(1000, 24, 0.7);
+            turnleft(Math.PI/2);
+            drive(1000,24,0.7);
         }   else if(tagOfInterest.id == MIDDLE){
-            drive(1000, 24, 0.7)
+            drive(1000, 24, 0.7);
         }   else if(tagOfInterest.id == RIGHT){
-            drive(1000, 24, 0.7)
-            turnright(Math.PI/2)
-            drive(1000,24,0.7)
+            drive(1000, 24, 0.7);
+            turnright(Math.PI/2);
+            drive(1000,24,0.7);
         }
     }
     //autonomous code stuff
