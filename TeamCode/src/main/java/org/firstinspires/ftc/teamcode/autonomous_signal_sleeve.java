@@ -112,7 +112,7 @@ public class autonomous_signal_sleeve extends LinearOpMode
             @Override
             public void onOpened()
             {
-                camera.startStreaming(3840,1080, OpenCvCameraRotation.UPRIGHT);
+                //camera.startStreaming(3840,1080, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
