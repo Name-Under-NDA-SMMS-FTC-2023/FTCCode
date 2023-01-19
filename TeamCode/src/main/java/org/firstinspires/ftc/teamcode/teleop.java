@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 //importing the needed variables.
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -153,12 +154,15 @@ public class teleop extends LinearOpMode {
             max = Math.max(max, Math.abs(rightBackPower));
             max = Math.max(max, Math.abs(ClawHeightPower));
 
-            if (max > 0.8) {
+            if (max > 0.5) {
                 leftFrontPower  /= max;
                 rightFrontPower /= max;
                 leftBackPower   /= max;
                 rightBackPower  /= max;
             }
+            Range.clip(axial, 0, 0.5)
+            Range.clip(lateral, 0, 0.5)
+            Range.clip(yaw, 0, 0,5)
 
             // This is test code:
             //
