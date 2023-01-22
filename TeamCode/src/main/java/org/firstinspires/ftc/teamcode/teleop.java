@@ -116,7 +116,7 @@ public class teleop extends LinearOpMode {
             double axial   = 0.6*gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  -(0.6)*gamepad1.left_stick_x;
             double yaw     =  (0.6*gamepad1.left_trigger) - (0.6*gamepad1.right_trigger);
-            double height = 2*gamepad1.right_stick_y;
+            double height = gamepad1.right_stick_y;
 
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
