@@ -113,10 +113,10 @@ public class teleop extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  -gamepad1.left_stick_x;
-            double yaw     =  gamepad1.left_trigger - gamepad1.right_trigger;
-            double height = gamepad1.right_stick_y;
+            double axial   = 0.6*gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double lateral =  -(0.6)*gamepad1.left_stick_x;
+            double yaw     =  (0.6*gamepad1.left_trigger) - (0.6*gamepad1.right_trigger);
+            double height = 2*gamepad1.right_stick_y;
 
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
@@ -160,9 +160,7 @@ public class teleop extends LinearOpMode {
                 leftBackPower   /= max;
                 rightBackPower  /= max;
             }
-            Range.clip(axial, 0, 0.5)
-            Range.clip(lateral, 0, 0.5)
-            Range.clip(yaw, 0, 0,5)
+
 
             // This is test code:
             //
