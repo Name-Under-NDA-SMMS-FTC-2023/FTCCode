@@ -174,11 +174,11 @@ public class  power extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Front Left Current", "%4.2f", getcurrent(leftFrontDrive, volt));
-            telemetry.addData("Front Right Current", "%4.2f", getcurrent(rightFrontDrive, volt));
-            telemetry.addData("Back Left Current", "%4.2f", getcurrent(leftBackDrive, volt));
-            telemetry.addData("Back Right Current", "%4.2f", getcurrent(rightBackDrive, volt));
-            telemetry.addData("Claw Height Current", "%4.2f", getcurrent(ClawHeight, volt));
+            telemetry.addData("Front Left Current", "%4.2f", leftFrontDrive.getcurrent());
+            telemetry.addData("Front Right Current", "%4.2f", rightFrontDrive.getcurrent());
+            telemetry.addData("Back Left Current", "%4.2f", leftBackDrive.getcurrent());
+            telemetry.addData("Back Right Current", "%4.2f", rightBackDrive.getcurrent());
+            telemetry.addData("Claw Height Current", "%4.2f", ClawHeight.getcurrent());
             telemetry.update();
         }
     }
