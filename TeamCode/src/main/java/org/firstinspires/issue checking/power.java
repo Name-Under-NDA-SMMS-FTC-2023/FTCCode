@@ -41,11 +41,11 @@ public class  power extends LinearOpMode {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        ClawHeight = hardwareMap.get(DcMotor.class, "Claw_height");
+        leftFrontDrive  = hardwareMap.get(DcMotorEx.class, "left_front_drive");
+        leftBackDrive  = hardwareMap.get(DcMotorEx.class, "left_back_drive");
+        rightFrontDrive = hardwareMap.get(DcMotorEx.class, "right_front_drive");
+        rightBackDrive = hardwareMap.get(DcMotorEx.class, "right_back_drive");
+        ClawHeight = hardwareMap.get(DcMotorEx.class, "Claw_height");
         Claw = hardwareMap.get(Servo.class, "Claw");
 
         // ########################################################################################
@@ -174,11 +174,11 @@ public class  power extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Front Left Current", "%4.2f", getcurrent(leftFrontDrive));
-            telemetry.addData("Front Right Current", "%4.2f", getcurrent(rightFrontDrive));
-            telemetry.addData("Back Left Current", "%4.2f", getcurrent(leftBackDrive));
-            telemetry.addData("Back Right Current", "%4.2f", getcurrent(rightBackDrive));
-            telemetry.addData("Claw Height Current", "%4.2f", getcurrent(ClawHeight));
+            telemetry.addData("Front Left Current", "%4.2f", getcurrent(leftFrontDrive, volt));
+            telemetry.addData("Front Right Current", "%4.2f", getcurrent(rightFrontDrive, volt));
+            telemetry.addData("Back Left Current", "%4.2f", getcurrent(leftBackDrive, volt));
+            telemetry.addData("Back Right Current", "%4.2f", getcurrent(rightBackDrive, volt));
+            telemetry.addData("Claw Height Current", "%4.2f", getcurrent(ClawHeight, volt));
             telemetry.update();
         }
     }
