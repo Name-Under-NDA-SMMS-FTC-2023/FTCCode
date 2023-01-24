@@ -127,25 +127,7 @@ public class teleop extends LinearOpMode {
             double rightBackPower  = axial + lateral - yaw;
             double ClawHeightPower = height;
 
-            if (gamepad1.left_bumper) {
-                leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-            else if (gamepad1.right_bumper) {
-                leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            }
-            else if (gamepad1.b) {
-                ClawHeight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-                private ElapsedTime floattime = new ElapsedTime();
-                if (floattime > 2) {
-                    ClawHeight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                }
-            }
+
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
