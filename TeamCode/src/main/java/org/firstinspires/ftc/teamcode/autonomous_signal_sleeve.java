@@ -62,24 +62,35 @@ public class autonomous_signal_sleeve extends LinearOpMode
         leftFrontDrive.setTargetPosition(target);
         rightBackDrive.setTargetPosition(target);
         leftBackDrive.setTargetPosition(target);
-
+        rightFrontDrive.setPower(power);
+        leftFrontDrive.setPower(power);
+        rightBackDrive.setPower(power);
+        leftBackDrive.setPower(power);
 
         }        
-        public void turnleft(double radians) {
+        public void turnleft(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
             rightFrontDrive.setTargetPosition(-target);
             leftFrontDrive.setTargetPosition(target);
             rightBackDrive.setTargetPosition(-target);
             leftBackDrive.setTargetPosition(target);
+            rightFrontDrive.setPower(power);
+            leftFrontDrive.setPower(power);
+            rightBackDrive.setPower(power);
+            leftBackDrive.setPower(power);
         }                
-        public void turnright(double radians) {
+        public void turnright(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
             rightFrontDrive.setTargetPosition(target);
             leftFrontDrive.setTargetPosition(-target);
             rightBackDrive.setTargetPosition(target);
             leftBackDrive.setTargetPosition(-target);
+            rightFrontDrive.setPower(power);
+            leftFrontDrive.setPower(power);
+            rightBackDrive.setPower(power);
+            leftBackDrive.setPower(power);
         }
     @Override
     public void runOpMode()
@@ -206,21 +217,48 @@ public class autonomous_signal_sleeve extends LinearOpMode
         }
 
         /* Actually do something useful */
-        if(tagOfInterest == null){
-            turnleft(Math.PI/2);
+        switch (tagOfInterest.id) {
+            case 1:
+                while(isStarted() && !isStopRequested()){
+                    turnleft(Math.PI/2, 0.7);
+                    drive(1000, 24, 0.7);
+                }
+                break;
+                
+            case 2:
+                while(isStarted() && !isStopRequested()){
+                    drive(1000, 24, 0.7);
+                }
+                break;
+            case 3:
+                while(isStarted() && !isStopRequested()) {
+                    drive(1000, 24, 0.7);
+                    turnright(Math.PI/2, 0.7);
+                    drive(1000,24,0.7);
+                }
+                break;
+            default:
+                while(isStarted() && !isStopRequested()) {
+                turnleft(Math.PI/2, 0.7);
+                drive(1000, 24, 0.7);
+                }
+                break;
+        }
+        /*if(tagOfInterest == null){
+            turnleft(Math.PI/2, 0.8);
             drive(1000, 24, 0.7);
         }else if(tagOfInterest.id == LEFT){
             drive(1000, 24, 0.7);
-            turnleft(Math.PI/2);
+            turnleft(Math.PI/2, 0.7);
             drive(1000,24,0.7);
         }   else if(tagOfInterest.id == MIDDLE){
             drive(1000, 24, 0.7);
         }   else if(tagOfInterest.id == RIGHT){
             drive(1000, 24, 0.7);
-            turnright(Math.PI/2);
+            turnright(Math.PI/2, 0.7);
             drive(1000,24,0.7);
         }
-    }
+    }*/
     //autonomous code stuff
     void tagToTelemetry(AprilTagDetection detection)
     {
