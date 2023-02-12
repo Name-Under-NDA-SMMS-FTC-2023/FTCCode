@@ -80,30 +80,24 @@ public class autonomous extends LinearOpMode
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
             rightFrontDrive.setTargetPosition(-target);
-            leftFrontDrive.setTargetPosition(target);
             rightBackDrive.setTargetPosition(-target);
             leftBackDrive.setTargetPosition(target);
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightFrontDrive.setPower(power);
-            leftFrontDrive.setPower(power);
             rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
         }                
         public void turnright(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(target);
             leftFrontDrive.setTargetPosition(-target);
             rightBackDrive.setTargetPosition(target);
             leftBackDrive.setTargetPosition(-target);
-            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightFrontDrive.setPower(power);
             leftFrontDrive.setPower(power);
             rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
