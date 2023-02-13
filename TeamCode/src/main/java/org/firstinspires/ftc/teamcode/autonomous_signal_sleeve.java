@@ -25,7 +25,7 @@ public class autonomous extends LinearOpMode
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
-    public final double radius = 2;
+    public final double radius = 9;
     public static final int DC_MOTOR_COUNTS_PER_REV = 28;
     public static final int DC_MOTOR_GEAR_RATIO = 2400;
     public static final int DC_MOTOR_COUNTS = (int)((DC_MOTOR_COUNTS_PER_REV * DC_MOTOR_GEAR_RATIO) / Math.PI);
