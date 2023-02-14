@@ -25,7 +25,7 @@ public class autonomous extends LinearOpMode
     private DcMotor rightBackDrive = null;
     private DcMotor ClawHeight = null;
     private Servo Claw = null;
-    public final double radius = 2;
+    public final double radius = 9;
     public static final int DC_MOTOR_COUNTS_PER_REV = 28;
     public static final int DC_MOTOR_GEAR_RATIO = 2400;
     public static final int DC_MOTOR_COUNTS = (int)((DC_MOTOR_COUNTS_PER_REV * DC_MOTOR_GEAR_RATIO) / Math.PI);
@@ -61,64 +61,52 @@ public class autonomous extends LinearOpMode
     AprilTagDetection tagOfInterest = null;
     
         public void drive(double speed, int inches, double power) {
-            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
             rightFrontDrive.setTargetPosition(target);
             leftFrontDrive.setTargetPosition(target);
             rightBackDrive.setTargetPosition(target);
             leftBackDrive.setTargetPosition(target);
-            rightFrontDrive.setPower(power);
+            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFrontDrive.setPower(-power);
             leftFrontDrive.setPower(power);
-            rightBackDrive.setPower(power);
+            rightBackDrive.setPower(-power);
             leftBackDrive.setPower(power);
 
         }        
         public void turnleft(double radians, double power) {
-            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
-            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(-target);
-            leftFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(-target);
-            leftBackDrive.setTargetPosition(target);
-            rightFrontDrive.setPower(power);
-            leftFrontDrive.setPower(power);
-            rightBackDrive.setPower(power);
-            leftBackDrive.setPower(power);
-        }                
-        public void turnright(double radians, double power) {
-            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
             rightFrontDrive.setTargetPosition(target);
-            leftFrontDrive.setTargetPosition(-target);
             rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(-target);
-            rightFrontDrive.setPower(power);
+            leftBackDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(target);
+            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFrontDrive.setPower(-power);
+            rightBackDrive.setPower(-power);
+            leftBackDrive.setPower(-power);
+            leftFrontDrive.setPower(-power);
+        }                
+        public void turnright(double radians, double power) {
+            double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
+            int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
+            leftFrontDrive.setTargetPosition(target);
+            rightBackDrive.setTargetPosition(target);
+            leftBackDrive.setTargetPosition(target);
+            rightFrontDrive.setTargetPosition(target);
+            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftFrontDrive.setPower(power);
             rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
+            rightFrontDrive.setPower(power);
         }
     @Override
     public void runOpMode()
@@ -170,6 +158,11 @@ public class autonomous extends LinearOpMode
          */
         while (!isStarted() && !isStopRequested())
         {
+            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            switch (tagOfInterest.id) {
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
             if(currentDetections.size() != 0)
@@ -241,7 +234,7 @@ public class autonomous extends LinearOpMode
         }
 
         /* Actually do something useful */
-        switch (tagOfInterest.id) {
+
             case 1:
                 while(isStarted() && !isStopRequested()){
                     turnleft(Math.PI/2, 0.7);
@@ -267,7 +260,7 @@ public class autonomous extends LinearOpMode
                 drive(1000, 24, 0.7);
                 }
                 break;
-        }}
+        }
         /*if(tagOfInterest == null){
             turnleft(Math.PI/2,0.7);
             drive(1000,24,0.7);
@@ -303,7 +296,7 @@ public class autonomous extends LinearOpMode
             drive(1000,24,0.7);
         }
     }*/
-    
+}
     void tagToTelemetry(AprilTagDetection detection)
     {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
