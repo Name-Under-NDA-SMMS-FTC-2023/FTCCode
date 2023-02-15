@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
-@Autonomous(name = "Autonomous Signal Sleeve")
+@Autonomous(name = "Autonomous")
 public class autonomous extends LinearOpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
@@ -62,10 +62,10 @@ public class autonomous extends LinearOpMode
     
         public void drive(double speed, int inches, double power) {
             int target = inches * DRIVETRAIN_COUNTS_PER_INCH;
-            rightFrontDrive.setTargetPosition(target);
-            leftFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(target);
+            rightFrontDrive.setTargetPosition(-target);
+            leftFrontDrive.setTargetPosition(-target);
+            rightBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(-target);
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -79,10 +79,10 @@ public class autonomous extends LinearOpMode
         public void turnleft(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            rightFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(target);
-            leftFrontDrive.setTargetPosition(target);
+            rightFrontDrive.setTargetPosition(-target);
+            rightBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(-target);
+            leftFrontDrive.setTargetPosition(-target);
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -95,10 +95,10 @@ public class autonomous extends LinearOpMode
         public void turnright(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            leftFrontDrive.setTargetPosition(target);
-            rightBackDrive.setTargetPosition(target);
-            leftBackDrive.setTargetPosition(target);
-            rightFrontDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(-target);
+            rightBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(-target);
+            rightFrontDrive.setTargetPosition(-target);
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -162,7 +162,6 @@ public class autonomous extends LinearOpMode
             leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            switch (tagOfInterest.id) {
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
             if(currentDetections.size() != 0)
@@ -234,7 +233,7 @@ public class autonomous extends LinearOpMode
         }
 
         /* Actually do something useful */
-
+        switch (tagOfInterest.id) {
             case 1:
                 while(isStarted() && !isStopRequested()){
                     turnleft(Math.PI/2, 0.7);
