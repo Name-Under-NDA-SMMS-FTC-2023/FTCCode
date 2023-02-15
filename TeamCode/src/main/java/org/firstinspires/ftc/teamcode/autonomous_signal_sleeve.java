@@ -74,6 +74,12 @@ public class autonomous extends LinearOpMode
             leftFrontDrive.setPower(power);
             rightBackDrive.setPower(-power);
             leftBackDrive.setPower(power);
+            if (leftFrontDrive.getCurrentPosition() >= leftFrontDrive.getTargetPosition() && rightFrontDrive.getCurrentPosition() >= rightFrontDrive.getTargetPosition() && leftBackDrive.getCurrentPosition() >= leftBackDrive.getTargetPosition() && rightBackDrive.getCurrentPosition() >= rightBackDrive.getTargetPosition()) {
+                rightFrontDrive.setPower(0);
+                leftFrontDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                leftBackDrive.setPower(0);
+            }
 
         }        
         public void turnleft(double radians, double power) {
@@ -91,6 +97,12 @@ public class autonomous extends LinearOpMode
             rightBackDrive.setPower(-power);
             leftBackDrive.setPower(-power);
             leftFrontDrive.setPower(-power);
+            if (leftFrontDrive.getCurrentPosition() <= leftFrontDrive.getTargetPosition() && rightFrontDrive.getCurrentPosition() <= rightFrontDrive.getTargetPosition() && leftBackDrive.getCurrentPosition() <= leftBackDrive.getTargetPosition() && rightBackDrive.getCurrentPosition() <= rightBackDrive.getTargetPosition()) {
+                rightFrontDrive.setPower(0);
+                leftFrontDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                leftBackDrive.setPower(0);
+            }
         }                
         public void turnright(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
@@ -107,6 +119,12 @@ public class autonomous extends LinearOpMode
             rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
             rightFrontDrive.setPower(power);
+            if (leftFrontDrive.getCurrentPosition() <= leftFrontDrive.getTargetPosition() && rightFrontDrive.getCurrentPosition() <= rightFrontDrive.getTargetPosition() && leftBackDrive.getCurrentPosition() <= leftBackDrive.getTargetPosition() && rightBackDrive.getCurrentPosition() <= rightBackDrive.getTargetPosition()) {
+                rightFrontDrive.setPower(0);
+                leftFrontDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                leftBackDrive.setPower(0);
+            }
         }
     @Override
     public void runOpMode()
