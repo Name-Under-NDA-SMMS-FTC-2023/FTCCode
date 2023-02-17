@@ -27,7 +27,7 @@ public class autonomous extends LinearOpMode
     private Servo Claw = null;
     public final double radius = 9;
     public static final int DC_MOTOR_COUNTS_PER_REV = 28;
-    public static final int DC_MOTOR_GEAR_RATIO = 2400;
+    public static final int DC_MOTOR_GEAR_RATIO = 60;
     public static final int DC_MOTOR_COUNTS = (int)((DC_MOTOR_COUNTS_PER_REV * DC_MOTOR_GEAR_RATIO) / Math.PI);
     public static final int DRIVETRAIN_WHEEL_DIAMETER = 4;
     public static final int DRIVETRAIN_COUNTS_PER_INCH = DC_MOTOR_COUNTS / DRIVETRAIN_WHEEL_DIAMETER;
@@ -70,46 +70,56 @@ public class autonomous extends LinearOpMode
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightFrontDrive.setPower(-power);
+            rightFrontDrive.setPower(power);
             leftFrontDrive.setPower(power);
-            rightBackDrive.setPower(-power);
+            rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
-            if (leftFrontDrive.getCurrentPosition() >= leftFrontDrive.getTargetPosition() && rightFrontDrive.getCurrentPosition() >= rightFrontDrive.getTargetPosition() && leftBackDrive.getCurrentPosition() >= leftBackDrive.getTargetPosition() && rightBackDrive.getCurrentPosition() >= rightBackDrive.getTargetPosition()) {
-                rightFrontDrive.setPower(0);
-                leftFrontDrive.setPower(0);
-                rightBackDrive.setPower(0);
-                leftBackDrive.setPower(0);
+            while (leftFrontDrive.getCurrentPosition() >= leftFrontDrive.getTargetPosition()) {
             }
-
+            rightFrontDrive.setPower(0);
+            leftFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            
         }        
         public void turnleft(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
             rightFrontDrive.setTargetPosition(-target);
             rightBackDrive.setTargetPosition(-target);
-            leftBackDrive.setTargetPosition(-target);
-            leftFrontDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(target);
+            leftFrontDrive.setTargetPosition(target);
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightFrontDrive.setPower(-power);
-            rightBackDrive.setPower(-power);
-            leftBackDrive.setPower(-power);
-            leftFrontDrive.setPower(-power);
-            if (leftFrontDrive.getCurrentPosition() <= leftFrontDrive.getTargetPosition() && rightFrontDrive.getCurrentPosition() <= rightFrontDrive.getTargetPosition() && leftBackDrive.getCurrentPosition() <= leftBackDrive.getTargetPosition() && rightBackDrive.getCurrentPosition() <= rightBackDrive.getTargetPosition()) {
-                rightFrontDrive.setPower(0);
-                leftFrontDrive.setPower(0);
-                rightBackDrive.setPower(0);
-                leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(power);
+            rightBackDrive.setPower(power);
+            leftBackDrive.setPower(power);
+            leftFrontDrive.setPower(power);
+            
+            while (leftFrontDrive.getCurrentPosition() <= leftFrontDrive.getTargetPosition()) {
             }
+            rightFrontDrive.setPower(0);
+            leftFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         }                
         public void turnright(double radians, double power) {
             double distance = 2 * Math.PI * radius * (radians/(2*Math.PI));
             int target = (int) (distance * DRIVETRAIN_COUNTS_PER_INCH);
-            leftFrontDrive.setTargetPosition(-target);
+            leftFrontDrive.setTargetPosition(target);
             rightBackDrive.setTargetPosition(-target);
-            leftBackDrive.setTargetPosition(-target);
+            leftBackDrive.setTargetPosition(target);
             rightFrontDrive.setTargetPosition(-target);
             rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -119,12 +129,17 @@ public class autonomous extends LinearOpMode
             rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
             rightFrontDrive.setPower(power);
-            if (leftFrontDrive.getCurrentPosition() <= leftFrontDrive.getTargetPosition() && rightFrontDrive.getCurrentPosition() <= rightFrontDrive.getTargetPosition() && leftBackDrive.getCurrentPosition() <= leftBackDrive.getTargetPosition() && rightBackDrive.getCurrentPosition() <= rightBackDrive.getTargetPosition()) {
-                rightFrontDrive.setPower(0);
-                leftFrontDrive.setPower(0);
-                rightBackDrive.setPower(0);
-                leftBackDrive.setPower(0);
+            while (leftFrontDrive.getCurrentPosition() >= leftFrontDrive.getTargetPosition()) {
             }
+            rightFrontDrive.setPower(0);
+            leftFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+           
         }
     @Override
     public void runOpMode()
@@ -250,32 +265,57 @@ public class autonomous extends LinearOpMode
             telemetry.update();
         }
 
+        int tag;
+
+        if (tagOfInterest == null) {
+            tag = 2;
+        } else {
+            tag = tagOfInterest.id;
+        }
+
         /* Actually do something useful */
-        switch (tagOfInterest.id) {
+        switch (tag) {
             case 1:
-                while(isStarted() && !isStopRequested()){
+                //while(isStarted() && !isStopRequested()){
+                    drive(1000, 12, 0.7);
                     turnleft(Math.PI/2, 0.7);
-                    drive(1000, 24, 0.7);
-                }
+                    drive(1000, 12, 0.7);
+                    telemetry.addData("Front L/R", "%4.2f", "%4.2f", leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition());
+                telemetry.addData("Back L/R", "%4.2f", "%4.2f", leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition());
+                telemetry.addData("Front L/R target", "%4.2f", "%4.2f", leftFrontDrive.getTargetPosition(), rightFrontDrive.getTargetPosition());
+                telemetry.addData("Back L/R target", "%4.2f", "%4.2f", leftBackDrive.getTargetPosition(), rightBackDrive.getTargetPosition());
+                //}
                 break;
                 
             case 2:
-                while(isStarted() && !isStopRequested()){
-                    drive(1000, 24, 0.7);
-                }
+                //while(isStarted() && !isStopRequested()){
+                    drive(1000, 12, 0.7);
+                    telemetry.addData("Front L/R", "%4.2f", "%4.2f", leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition());
+                    telemetry.addData("Back L/R", "%4.2f", "%4.2f", leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition());
+                    telemetry.addData("Front L/R target", "%4.2f", "%4.2f", leftFrontDrive.getTargetPosition(), rightFrontDrive.getTargetPosition());
+                    telemetry.addData("Back L/R target", "%4.2f", "%4.2f", leftBackDrive.getTargetPosition(), rightBackDrive.getTargetPosition());
+                //}
                 break;
             case 3:
-                while(isStarted() && !isStopRequested()) {
-                    drive(1000, 24, 0.7);
+                //while(isStarted() && !isStopRequested()) {
+                    drive(1000, 12, 0.7);
                     turnright(Math.PI/2, 0.7);
-                    drive(1000,24,0.7);
-                }
+                    drive(1000,12,0.7);
+                    telemetry.addData("Front L/R", "%4.2f", "%4.2f", leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition());
+                    telemetry.addData("Back L/R", "%4.2f", "%4.2f", leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition());
+                    telemetry.addData("Front L/R target", "%4.2f", "%4.2f", leftFrontDrive.getTargetPosition(), rightFrontDrive.getTargetPosition());
+                    telemetry.addData("Back L/R target", "%4.2f", "%4.2f", leftBackDrive.getTargetPosition(), rightBackDrive.getTargetPosition());
+                //}
                 break;
             default:
-                while(isStarted() && !isStopRequested()) {
+                //while(isStarted() && !isStopRequested()) {
                 turnleft(Math.PI/2, 0.7);
-                drive(1000, 24, 0.7);
-                }
+                drive(1000, 12, 0.7);
+                telemetry.addData("Front L/R", "%4.2f", "%4.2f", leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition());
+                telemetry.addData("Back L/R", "%4.2f", "%4.2f", leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition());
+                telemetry.addData("Front L/R target", "%4.2f", "%4.2f", leftFrontDrive.getTargetPosition(), rightFrontDrive.getTargetPosition());
+                telemetry.addData("Back L/R target", "%4.2f", "%4.2f", leftBackDrive.getTargetPosition(), rightBackDrive.getTargetPosition());
+                //}
                 break;
         }
         /*if(tagOfInterest == null){
@@ -323,8 +363,6 @@ public class autonomous extends LinearOpMode
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
-        telemetry.addLine(String.format("Front encoders left, right = %d, %d", leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition()));
-        telemetry.addLine(String.format("Back encoders left, right = %d, %d", leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition()));
     }
     
 }
