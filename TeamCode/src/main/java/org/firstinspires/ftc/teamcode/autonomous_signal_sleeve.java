@@ -75,6 +75,7 @@ public class autonomous extends LinearOpMode
             rightBackDrive.setPower(power);
             leftBackDrive.setPower(power);
             while (leftFrontDrive.getCurrentPosition() >= leftFrontDrive.getTargetPosition()) {
+                telemetry.addData("Forward", "Running");
             }
             rightFrontDrive.setPower(0);
             leftFrontDrive.setPower(0);
@@ -103,6 +104,7 @@ public class autonomous extends LinearOpMode
             leftFrontDrive.setPower(power);
             
             while (leftFrontDrive.getCurrentPosition() <= leftFrontDrive.getTargetPosition()) {
+                telemetry.addData("Left", "Running");
             }
             rightFrontDrive.setPower(0);
             leftFrontDrive.setPower(0);
@@ -130,6 +132,7 @@ public class autonomous extends LinearOpMode
             leftBackDrive.setPower(power);
             rightFrontDrive.setPower(power);
             while (leftFrontDrive.getCurrentPosition() >= leftFrontDrive.getTargetPosition()) {
+                telemetry.addData("Right", "Running");
             }
             rightFrontDrive.setPower(0);
             leftFrontDrive.setPower(0);
